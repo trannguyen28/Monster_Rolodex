@@ -8,7 +8,8 @@ class App extends Component {
     super(); // always call super() with constructor
 
     this.state = { // state is initially an JSON object
-      name: "Tran", // give variables to state
+      name: {firstName: "Tran", lastName: "Nguyen"},
+      school: "UCR",
     };
 
   }
@@ -17,10 +18,11 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p> Hi {this.state.name} </p> 
+          <p> Hi {this.state.name.firstName} {this.state.name.lastName} </p> 
           <button onClick={() => {
             // this.state.name = "Bi" <- doesnt create a new object, old object is not changed
-            this.setState({name: "Bi"}); // if new object has same key as constructor, the key will get updated. setState for shallow merging
+            this.setState({name: {firstName: "Bi", lastName: "Heo"}}); // update with a new object of the same format of the declared object
+            console.log(this.state); // the above way is changing the name asynchronously, so the console log, which is synchronous, wont get updated immediately 
           }}>Change Name</button>
           <a
             className="App-link"
