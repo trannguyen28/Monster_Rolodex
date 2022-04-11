@@ -19,11 +19,22 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p> Hi {this.state.name.firstName} {this.state.name.lastName} </p> 
-          <button onClick={() => {
-            // this.state.name = "Bi" <- doesnt create a new object, old object is not changed
-            this.setState({name: {firstName: "Bi", lastName: "Heo"}}); // update with a new object of the same format of the declared object
-            console.log(this.state); // the above way is changing the name asynchronously, so the console log, which is synchronous, wont get updated immediately 
-          }}>Change Name</button>
+          <button onClick={
+            () => {
+              // this.state.name = "Bi" <- doesnt create a new object, old object is not changed
+              this.setState( // pass in functions. console log is also called inside setState so we log every setState.
+                // functions will run sequentially inside this call
+                () => { 
+                  return {
+                    name: {firstName: "Bi", lastName: "Heo"},
+                  };
+                },
+                () => {
+                  console.log(this.state);
+                }
+              ); // update with a new object of the same format of the declared object
+            }
+          }>Change Name</button>
           <a
             className="App-link"
             href="https://reactjs.org"
